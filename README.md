@@ -47,7 +47,7 @@ login.messages.invalid_credentials,Invalid Credentials
 ```json
 {
     "login": {
-        "username": "Username"
+        "username": "Username",
         "password": "Password",
         "messages": {
           "invalid_credentials": "Invalid credentials"
