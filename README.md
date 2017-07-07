@@ -33,11 +33,11 @@ $ node diff.js --save en.json de.json fr.json
 
 $ cat de.missing.csv
 login.password,Password
-login.messages.invalid_credentials,Invalid Credentials
+login.messages.invalid_credentials,Invalid credentials
 
 
 $ cat fr.missing.csv
-login.messages.invalid_credentials,Invalid Credentials
+login.messages.invalid_credentials,Invalid credentials
 ```
 
 ## Example translation files
