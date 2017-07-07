@@ -7,7 +7,7 @@ This tool helps you to extract all untranslated strings from json based translat
 Run the script with the master translation file as first parameter. Then pass all other language files as well.
 
 ```
-$ ./diff.js en.json de.json fr.json
+$ node diff.js en.json de.json fr.json
 ```
 
 The script will print out all the missing strings for each language:
@@ -29,7 +29,7 @@ Missing in fr.json
 Use the `--save` parameter to write the missing strings to a csv file. A separate file for each language will be created. The file includes the translation key and the original translation string from the master file.
 
 ```
-$ ./diff.js --save en.json de.json fr.json
+$ node diff.js --save en.json de.json fr.json
 
 $ cat de.missing.csv
 login.password,Password
