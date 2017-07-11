@@ -63,16 +63,20 @@ process.argv.forEach(function (value, index, array) {
 
 });
 
+// Konsolenausgabe um Zeilenumbruch zu erzwingen
+console.log();
+
 // Für jedes translationFile
 for (var i = 0; i < translationFiles.length; i++) {
 
     // Setze Werte
     var translationFile = translationFiles[i].content;
     var fileName = translationFiles[i].name;
-    var missingValues = '';
+    var missingKeys = '';
+    var missingCSV = '';
 
     // Konsolenausgabe des filesName
-    console.log('\nMissing in ' + fileName + ':\n');
+    console.log('Missing in ' + fileName + ':\n');
 
     // Für jedes Attribut des masterTranslationFile
     for (var key in masterTranslationFile) {
@@ -83,8 +87,9 @@ for (var i = 0; i < translationFiles.length; i++) {
             // Wenn key fehlt
             if (!translationFile.hasOwnProperty(key)) {
 
-                // Update missingValues
-                missingValues += '"' + key + '","' + masterTranslationFile[key] + '"\n';
+                // Update missingKeys und missingCSV
+                missingKeys += '- ' + key + '\n';
+                missingCSV += '"' + key + '","' + masterTranslationFile[key] + '"\n';
             }
 
         }
@@ -92,7 +97,7 @@ for (var i = 0; i < translationFiles.length; i++) {
     }
 
     // Konsolenausgabe der fehlenden Werte
-    console.log(missingValues);
+    console.log(missingKeys);
 
     // Wenn CSVFiles generiert werden sollen
     if (generateCSVFiles) {
@@ -101,7 +106,7 @@ for (var i = 0; i < translationFiles.length; i++) {
         var language = fileName.replace('.json', '');
 
         // Erstelle CSV-Files
-        fs.writeFile(language + '.missing.csv', missingValues, 'utf-8', function (error) {
+        fs.writeFile(language + '.missing.csv', missingCSV, 'utf-8', function (error) {
             // Konsolenausgabe der Fehlermeldung
             console.log('Fehler: CSV-File konnte nicht erstellt werden.' + '\n' + 'Original error: ' + error);
         })
