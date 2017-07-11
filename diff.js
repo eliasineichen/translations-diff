@@ -10,6 +10,7 @@ process.argv.forEach(function (value, index, array) {
 
         // Wenn Argument NICHT '.json' oder '--save'
         if (!(value.match(/\.json/) || value === '--save')){
+            // Konsolenausgabe der Fehlermeldung
             console.log("Argument '" + value + "' ungueltig!");
             process.exit();
         }
@@ -42,6 +43,7 @@ process.argv.forEach(function (value, index, array) {
                     translationFiles.push(tempTranslationFileObject);
                 }
             } catch (error) {
+                // Konsolenausgabe der Fehlermeldung
                 console.log("Fehler: JSON '" + value + "' konnte nicht geladen werden." + "\n" + "Original error: " + error);
                 process.exit();
             }
@@ -62,9 +64,11 @@ for (var i = 0; i < translationFiles.length; i++) {
 
     // Setze Werte
     var translationFile = translationFiles[i].content;
+    var fileName = translationFiles[i].name;
     var missingValues = '';
 
-    console.log('----------');
+    // Konsolenausgabe des filesName
+    console.log('\nMissing in ' + fileName + ':\n');
 
     // Für jedes Attribut des masterTranslationFile
     for (var key in masterTranslationFile) {
@@ -82,10 +86,8 @@ for (var i = 0; i < translationFiles.length; i++) {
         }
 
     }
-    
+
+    // Konsolenausgabe der fehlenden Werte
     console.log(missingValues);
 
 }
-
-// console.log('master: ', masterTranslationFile);
-// console.log('others: ', translationFiles);
