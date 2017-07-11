@@ -79,22 +79,24 @@ for (var i = 0; i < translationFiles.length; i++) {
     console.log('Missing in ' + fileName + ':\n');
 
     // Für jedes Attribut des masterTranslationFile
-    for (var key in masterTranslationFile) {
+    // for (var key in masterTranslationFile) {
 
-        // Verschachtelte Objekte vorerst ignorieren
-        if (typeof (key) !== 'object') {
+    //     // Verschachtelte Objekte vorerst ignorieren
+    //     if (typeof (key) !== 'object') {
 
-            // Wenn key fehlt
-            if (!translationFile.hasOwnProperty(key)) {
+    //         // Wenn key fehlt
+    //         if (!translationFile.hasOwnProperty(key)) {
 
-                // Update missingKeys und missingCSV
-                missingKeys += '- ' + key + '\n';
-                missingCSV += '"' + key + '","' + masterTranslationFile[key] + '"\n';
-            }
+    //             // Update missingKeys und missingCSV
+    //             missingKeys += '- ' + key + '\n';
+    //             missingCSV += '"' + key + '","' + masterTranslationFile[key] + '"\n';
+    //         }
 
-        }
+    //     }
 
-    }
+    // }
+    parent = '';
+    compareJSON(masterTranslationFile, translationFile, '');
 
     // Konsolenausgabe der fehlenden Werte
     console.log(missingKeys);
@@ -110,5 +112,21 @@ for (var i = 0; i < translationFiles.length; i++) {
             // Konsolenausgabe der Fehlermeldung
             console.log('Fehler: CSV-File konnte nicht erstellt werden.' + '\n' + 'Original error: ' + error);
         })
+    }
+}
+
+function compareJSON (majorJSON, minorJSON, parent) {
+    
+    // Setzte Werte
+    if (parent) {
+        parent += '.' + parent;
+    }
+
+    // Für jedes Attribut des majorJSON
+    for (var key in majorJSON) {
+        if (typeof (majorJSON[key]) === 'object') {
+            console.log(parent + '.' + key);
+            compareJSON(majorJSON[key], minorJSON[key], key);
+        }
     }
 }
