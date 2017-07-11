@@ -57,5 +57,35 @@ process.argv.forEach(function (value, index, array) {
 
 });
 
-console.log('master: ', masterTranslationFile);
-console.log('others: ', translationFiles);
+// Für jedes translationFile
+for (var i = 0; i < translationFiles.length; i++) {
+
+    // Setze Werte
+    var translationFile = translationFiles[i].content;
+    var missingValues = '';
+
+    console.log('----------');
+
+    // Für jedes Attribut des masterTranslationFile
+    for (var key in masterTranslationFile) {
+
+        // Verschachtelte Objekte vorerst ignorieren
+        if (typeof(key) !== 'object') {
+
+            // Wenn key fehlt
+            if (!translationFile.hasOwnProperty(key)) {
+
+                // Update missingValues
+                missingValues += '"' + key + '", "' + masterTranslationFile[key] + '"\n'; 
+            }
+
+        }
+
+    }
+    
+    console.log(missingValues);
+
+}
+
+// console.log('master: ', masterTranslationFile);
+// console.log('others: ', translationFiles);
