@@ -1,0 +1,19 @@
+{
+  "name": "translations-diff",
+  "version": "0.0.1",
+  "description": "This tool helps you to extract all untranslated strings from json based translation files.",
+  "main": "diff.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eliasineichen/translations-diff.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eliasineichen/translations-diff/issues"
+  },
+  "homepage": "https://github.com/eliasineichen/translations-diff#readme"
+}
