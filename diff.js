@@ -1,15 +1,19 @@
+// Importe
+var fs = require('fs');
+
 // Definition (Deklaration, Initialisierung) der globalen Variablen
 var masterTranslationFile;
 var translationFiles = [];
+var generateCSVFiles = false;
 
 // CMD-Befehl nach ungueltigen Parametern ueberpruefen
 process.argv.forEach(function (value, index, array) {
-    
+
     // Erst ab drittem Argument ueberpruefen, da erste zwei Argumente 'node.js' und 'diff.js' sind
     if (index > 1) {
 
         // Wenn Argument NICHT '.json' oder '--save'
-        if (!(value.match(/\.json/) || value === '--save')){
+        if (!(value.match(/\.json/) || value === '--save')) {
             // Konsolenausgabe der Fehlermeldung
             console.log("Argument '" + value + "' ungueltig!");
             process.exit();
@@ -21,7 +25,7 @@ process.argv.forEach(function (value, index, array) {
 
 // Argumente auslesen
 process.argv.forEach(function (value, index, array) {
-    
+
     // Erst ab drittem Argument ueberpruefen, da erste zwei Argumente 'node.js' und 'diff.js' sind
     if (index > 1) {
 
@@ -49,10 +53,10 @@ process.argv.forEach(function (value, index, array) {
             }
 
         }
-            
-        // Wenn Argument '--save'
-        if(value === '--save') {
 
+        // Wenn Argument '--save'
+        if (value === '--save') {
+            generateCSVFiles = true;
         }
 
     }
@@ -74,13 +78,13 @@ for (var i = 0; i < translationFiles.length; i++) {
     for (var key in masterTranslationFile) {
 
         // Verschachtelte Objekte vorerst ignorieren
-        if (typeof(key) !== 'object') {
+        if (typeof (key) !== 'object') {
 
             // Wenn key fehlt
             if (!translationFile.hasOwnProperty(key)) {
 
                 // Update missingValues
-                missingValues += '"' + key + '", "' + masterTranslationFile[key] + '"\n'; 
+                missingValues += '"' + key + '","' + masterTranslationFile[key] + '"\n';
             }
 
         }
@@ -90,4 +94,16 @@ for (var i = 0; i < translationFiles.length; i++) {
     // Konsolenausgabe der fehlenden Werte
     console.log(missingValues);
 
+    // Wenn CSVFiles generiert werden sollen
+    if (generateCSVFiles) {
+
+        // Setze Sprache
+        var language = fileName.replace('.json', '');
+
+        // Erstelle CSV-Files
+        fs.writeFile(language + '.missing.csv', missingValues, 'utf-8', function (error) {
+            // Konsolenausgabe der Fehlermeldung
+            console.log('Fehler: CSV-File konnte nicht erstellt werden.' + '\n' + 'Original error: ' + error);
+        })
+    }
 }
